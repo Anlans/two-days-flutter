@@ -1,3 +1,43 @@
+### 第一课
+Text(
+  '内容'i,
+  style: TextStyle(
+    color: ,
+    background: ,
+    ...
+  )
+)
+
+
+--------------------------------
+
+Text.rich(
+  TextSpan(
+    children: [
+      TextSpan('aaa'),
+      TextSpan('bbb'),
+
+    ]
+  )
+
+)
+
+
+
+
+
+--------------------------------
+
+DefaultTextStyle子节点,孙子,...的默认字体样式
+用途: 整个程序/整个页面初始文本样式
+
+
+
+
+
+
+
+--------------------------------
 Color(0xxxx)
 
 1.16进制
@@ -12,11 +52,72 @@ Color.fromARGB(alpha, red, green, blue)
 Color.fromRGBO(red, green, blue, opacity)
 
 
+--------------------------------
+
+
+
+3. Colors.red/green/blue
+
+--------------------------------
+### 第二课
+Image
+Image.asset     引入源码资源文件
+Image.file      从用户本地文件系统读取
+Image.network   读取网络的图片
+Image.memory    从内存中读取图片
+
+
+--------------------------------
+越小越好--flutter尽量少的打包文件
+需要我声明打包什么东西
+
+
+--------------------------------
+资源文件一定要先声明,不声明不打包
+
+1.pubspec声明 => pubspec.yaml
+flutter
+  assets:
+    - assets/a.png
+    - assets/b.png
+
+2.使用 => main.dart
+  child: Image.assert('资源访问符')
+
+
+
 
 --------------------------------
 
 
 
-3.
+
+
+
+
+
+
+
+
+--------------------------------
+
+
+
+
+
+
+
+
+
+
+--------------------------------
+
+
+
+
+
+
+
+
 
 

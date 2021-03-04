@@ -12,13 +12,9 @@ class App extends StatelessWidget {
       title: 'my first flutter',
       home: Scaffold(
         appBar: AppBar(title: Text('adf')),
-        body: Text(
-          'aaa',
-          style: TextStyle(
-            color: Colors.redAccent,
-            fontSize: 50
-          ),
-
+        body: Image.asset(
+            'assets/a.png',
+            width: ,
         ),
       ),
     );
