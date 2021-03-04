@@ -1,0 +1,18 @@
+Color(0xxxx)
+
+1.16进制
+0xffff0000
+ff alpha        0~255  00~ff
+ff red
+00 green
+00 blue
+
+2.分开写
+Color.fromARGB(alpha, red, green, blue)
+Color.fromRGBO(red, green, blue, opacity)
+
+--------------------------------
+
+3.
+
+
