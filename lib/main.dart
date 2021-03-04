@@ -16,7 +16,7 @@ class App extends StatelessWidget {
           'aaa',
           style: TextStyle(
             color: Colors.redAccent,
-            fontSize: 50,
+            fontSize: 50
           ),
 
         ),
