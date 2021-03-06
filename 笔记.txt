@@ -117,16 +117,67 @@ Icon(
 
 
 --------------------------------
+### 第四课
+组件:
+布局组件--搭架子
+1.Container (容器)            单子级child:
+  最普通的 (类似html中div)
+  width
+  height
+  alignment
+
+  decoration: BonxDecoration(
+    color 背景色
+    image
+    border
+  )
 
 
 
 
+2.Expanded (扩展)             单子级child:
+  占据尽可能大的空间
+
+  Spacer()
 
 
 
 
+3.Row/Colum (行/列)           多子级 children:
 
 
+--------------------------------
+
+4.Stack (堆栈)                多子级 children:
+  类似绝对定位
+
+  Container
+
+  Positioned
+
+  SingleChildScrollView
+
+
+
+5.GridView (格子3x3 8x8 ....) 多子级 children:
+  n*n
+
+6.Table(表格)                 多自己 children:
+
+
+
+--------------------------------
+### 第五课
+自适应 Row Column
+
+### 第六课
+堆叠Stack
+
+--------------------------------
+
+
+
+--------------------------------
 
 
 
