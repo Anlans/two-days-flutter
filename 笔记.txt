@@ -88,9 +88,55 @@ flutter
 
 
 --------------------------------
+Image.asset(
+  'src',
+  width: xxx,
+  height: xxx,
+  fit: BoxFit.fitWidth,
+);
+
+
+--------------------------------
+
+MediaQuery--媒体查询
+  获取屏幕信息
+
+var screen=MediaQuery.of(context); //context
+screen.size.width
+screen.size.height
+
+--------------------------------
+###第三课
+Icon
+
+Icon(
+  Icon.favorite
+  color: ,
+  size: ,
+);
+
+
+--------------------------------
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+--------------------------------
+
+
+--------------------------------
 
 
 
@@ -109,15 +155,5 @@ flutter
 
 
 
-
 --------------------------------
-
-
-
-
-
-
-
-
-
 
