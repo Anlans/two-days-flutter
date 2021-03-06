@@ -290,7 +290,164 @@ class Page2 extends StatelessWidget{
 --------------------------------
 
 ###　第十课
+传参
+路由参数:
 
+
+
+--------------------------------
+
+
+Widget的key?
+
+优化--判断组件是否替换的依据 (key)
+
+--------------------------------
+1.路由参数非常重要
+2.所有的Widget都有key
+  检测元件变化
+3.Widget子类加构造器带上key
+```
+class Page2 extends StatelessWidget{
+  final title;
+
+  Page2({key, this.title}):super(key: key);
+```
+
+--------------------------------
+
+路由表:
+统一管理所有路由项
+
+
+
+--------------------------------
+1.不用路由表
+  //不需要注册
+```
+Navigator.push(context, MaterialPageRoute(builder: (context){
+    return Page2(title: 'aaa');
+}));
+```
+
+final title;
+Page2({Key, this.title}):super(key:key);
+
+
+2.使用路由表
+  //注册路由表
+  MaterialApp(
+    title: App标题,
+    home: 初始展示页面,
+    routes: {
+     'name1': (context)=>Page1();
+     'name2': (context)=>Page2();
+    }
+  );
+
+  //直接靠名字跳转
+  Navigator.pushNamed(context, 'name1', arguments: xxx);
+
+
+
+
+
+
+
+Navigator.push(context, MaterialPageRoute(builder: (context){
+    return Page2(title: 'aaa');
+}));
+
+--------------------------------
+```
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(App());
+}
+
+class App extends StatelessWidget {
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+
+    return MaterialApp(
+      title: 'my first flutter',
+      routes: {
+        'home': (context)=>Page1(),
+        'page2': (context)=>Page2(),
+      },
+      home: Page1(),
+    );
+  }
+}
+
+class Page1 extends StatelessWidget{
+  Widget build(BuildContext context) {
+
+    return Scaffold(
+      appBar: AppBar(title: Text('页面1')),
+      body: Column(
+        children: [
+          Text('页面111'),
+          FlatButton(
+            color: Colors.blue,
+            child: Text('跳转到页面222'),
+            onPressed: (){
+              Navigator.pushNamed(context, 'page2', arguments: {
+                'title': 'aaa',
+                'aa': 12,
+              });
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+class Page2 extends StatelessWidget{
+
+  Page2({key}):super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var args=ModalRoute.of(context).settings.arguments as Map;
+    var title=args['title'];
+
+    return Scaffold(
+      appBar: AppBar(title: Text('页面2')),
+      body: Column(
+        children: [
+          Text('页面222$title'),
+          FlatButton(
+            color: Colors.blue,
+            child: Text('回到1'),
+            onPressed: (){
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+
+--------------------------------
+### 第十一课
+
+
+
+
+
+
+--------------------------------
+
+
+
+--------------------------------
 
 
 
@@ -300,16 +457,6 @@ class Page2 extends StatelessWidget{
 --------------------------------
 
 
---------------------------------
-
-
---------------------------------
-
-
-
---------------------------------
-
-
 
 --------------------------------
 
@@ -321,5 +468,16 @@ class Page2 extends StatelessWidget{
 
 
 
+
 --------------------------------
+
+
+
+
+
+
+
+
+
+
 
