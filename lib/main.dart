@@ -11,83 +11,50 @@ class App extends StatelessWidget {
 
     return MaterialApp(
       title: 'my first flutter',
-      home: Scaffold(
-        appBar: AppBar(title: Text('adf')),
-        body: Home(),
+      home: Page1(),
+    );
+  }
+}
+
+class Page1 extends StatelessWidget{
+  Widget build(BuildContext context) {
+
+    return Scaffold(
+      appBar: AppBar(title: Text('页面1')),
+      body: Column(
+        children: [
+          Text('页面111'),
+          FlatButton(
+            color: Colors.blue,
+            child: Text('跳转到页面222'),
+            onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context){
+                return Page2();
+              }));
+            },
+          ),
+        ],
       ),
     );
   }
 }
-// class Home extends StatelessWidget {
-//   Widget build (BuildContext context) {
-//     return GridView.count(
-//       crossAxisCount: 5,
-//       padding: EdgeInsets.all(10),
-//       crossAxisSpacing: 10,
-//       mainAxisSpacing: 100,
-//       children: ['aaa','bbb','ccc','ddd','eee','fff','ddd','eee','fff','ddd','eee','fff','ddd','eee','fff'].map((str)=>Container(
-//           decoration: BoxDecoration(
-//             border: Border.all(width: 1),
-//           ),
-//         child: Center(
-//           child: Text(str),
-//         ),
-//       )).toList(),
-//     );
-//
-//   }
-//}
+class Page2 extends StatelessWidget{
+  Widget build(BuildContext context) {
 
-class Home extends StatelessWidget {
-  Widget build (BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(10),
-        child: Table(
-          border: TableBorder.all(),
-          children: [
-            TableRow(
-              children: [
-                Container(
-                  height: 100,
-                  child: Center(
-                    child: Text('a'),
-                  ),
-                ),
-                Container(
-                  height: 100,
-                  decoration: BoxDecoration(
-                    color: Colors.green,
-                  ),
-                  child: Center(
-                    child: Text('b'),
-                  ),
-                ),
-                Center(
-                  child: Text('b'),
-                ),
-                Center(
-                  child: Text('d'),
-                ),
-              ],
-            ),
-            TableRow(
-              children: [
-                Center(
-                  child: Text('a'),
-                ),
-                Center(
-                  child: Text('b'),
-                ),
-                Center(
-                  child: Text('b'),
-                ),
-                Center(
-                  child: Text('d'),
-                ),
-              ],
-            ),
-          ],
-        )
+    return Scaffold(
+      appBar: AppBar(title: Text('页面2')),
+      body: Column(
+        children: [
+          Text('页面222'),
+          FlatButton(
+            color: Colors.blue,
+            child: Text('回到1'),
+            onPressed: (){
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
     );
   }
 }
