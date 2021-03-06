@@ -437,13 +437,31 @@ class Page2 extends StatelessWidget{
 
 --------------------------------
 ### 第十一课
+动态路由:
+登录?
+page2 ->Page2()
+      ->Login()
 
+--------------------------------
 
+1.需要app完全接管路由
+  不能写home
+  initialRoute: '/'
 
+  name不能乱写--写成路径
+
+  onGenerateRoute:(settings) {
+    return MaterialPageRoute(builder: (context){
+      return Page2();
+
+      return Login();
+    });
+  }
 
 
 
 --------------------------------
+### 第十二课
 
 
 

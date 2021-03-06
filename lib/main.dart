@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 void main() {
   runApp(App());
@@ -12,17 +13,24 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'my first flutter',
       routes: {
-        'home': (context)=>Page1(),
-        'page2': (context)=>Page2(),
+        '/': (context)=>Page1(),
+        '/page2': (context)=>Page2(),
       },
-      home: Page1(),
+      onGenerateRoute: (settings){
+        print(settings);
+        return MaterialPageRoute(builder: (context){
+
+          return Page2();
+        });
+      },
+      initialRoute: '/',
     );
   }
 }
 
-class Page1 extends StatelessWidget{
+class Page1 extends HookWidget{
   Widget build(BuildContext context) {
-
+    var logined=useState(false);
     return Scaffold(
       appBar: AppBar(title: Text('页面1')),
       body: Column(
@@ -36,6 +44,13 @@ class Page1 extends StatelessWidget{
                 'title': 'aaa',
                 'aa': 12,
               });
+            },
+          ),
+          FlatButton(
+            color: Colors.blue,
+            child: Text('登录'),
+            onPressed: (){
+              logined.value=true;
             },
           ),
         ],
@@ -69,5 +84,11 @@ class Page2 extends StatelessWidget{
         ],
       ),
     );
+  }
+}
+
+class Login extends StatelessWidget{
+  Widget build(BuildContext context) {
+    return Text('登录', style: TextStyle(fontSize: 50, color: Colors.red));
   }
 }
