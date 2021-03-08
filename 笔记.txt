@@ -462,6 +462,243 @@ page2 ->Page2()
 
 --------------------------------
 ### 第十二课
+状态管理
+1.局部状态
+  StatefulWidget
+    setState((){
+
+    });
+
+
+
+  HookWidget
+    更方便
+--------------------------------
+父->子        啥都不用做
+
+子->父        子级不能直接修改父级的东西,应该通知父级
+
+***状态属于谁,由谁修改***
+
+--------------------------------
+
+
+
+
+--------------------------------
+
+2.全局状态
+hook
+flutter_redux_hooks
+
+redux
+1.reducer -- 状态+action=>新状态
+2.创建store对象
+3.Provider对象 StoreProvider
+
+
+--------------------------------
+1.三个库
+  redux => Store => state+reduer
+
+  flutter_redux_hooks => StoreProvider
+    useSelector
+    useDispatch
+
+  flutter_hooks => HookWidget
+
+2.流程
+  1.reducer函数   oldState+action => newState
+  2.Store对象
+    var store=Store<StateType>(reducer, initialState: 初始状态);
+  3.StoreProvider
+    runApp(StoreProvider(
+      store: store,
+      child: App(),
+    ));
+
+3.操作数据
+  useSelector  获取数据,State非常复杂
+  useDispatch  dispatch(action)
+
+
+
+
+--------------------------------
+### 第十三课
+全局状态管理
+2.全局状态
+hook
+flutter_redux_hooks
+
+redux
+1.reducer -- 状态+action=>新状态
+2.创建store对象
+3.Provider对象 StoreProvider
+
+
+--------------------------------
+1.三个库
+  redux => Store => state+reduer
+
+  flutter_redux_hooks => StoreProvider
+    useSelector
+    useDispatch
+
+  flutter_hooks => HookWidget
+
+2.流程
+  1.reducer函数   oldState+action => newState
+  2.Store对象
+    var store=Store<StateType>(reducer, initialState: 初始状态);
+  3.StoreProvider
+    runApp(StoreProvider(
+      store: store,
+      child: App(),
+    ));
+
+3.操作数据
+  useSelector  获取数据,State非常复杂
+  useDispatch  dispatch(action)
+
+```
+import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart' show HookWidget, useState;
+import 'package:flutter_redux_hooks/flutter_redux_hooks.dart';
+import 'package:redux/redux.dart';
+
+enum Actions {
+  Add
+}
+
+int reducer(int state, action){
+  switch(action) {
+    case Actions.Add:
+      return state+1;
+      break;
+    default:
+      throw Error();
+  }
+
+}
+
+
+void main() {
+  // runApp(App());
+
+  //2.创建store对象
+  var store=Store<int>(reducer, initialState: 8);
+
+  //3.启动app
+  runApp(StoreProvider(
+    store: store,
+    child: App(),
+  ));
+}
+
+
+
+
+class App extends StatelessWidget {
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title:'my first flutter',
+      home: Page1(),
+    );
+
+  }
+}
+
+class Page1 extends StatelessWidget{
+  Widget build(BuildContext context) {
+    // var a=useState(0);
+
+    return Scaffold(
+      appBar: AppBar(title: Text('页面1')),
+      body: Column(
+        children: [
+          Cmp1(),
+          Cmp2(),
+        ],
+      ),
+    );
+  }
+
+}
+
+class Cmp1 extends HookWidget{
+  Widget build(BuildContext context) {
+    var count=useSelector<int, int>((state){
+      return state;
+    });
+
+    var dispatch=useDispatch<int>();
+
+    return Container(
+      width: 150,
+      height: 50,
+      decoration: BoxDecoration(
+        color: Colors.yellow,
+      ),
+      child: Row(
+        children: [
+          Text('count: $count'),
+          FlatButton(
+            color: Colors.blue,
+            child: Text('++'),
+            onPressed: (){
+              dispatch(Actions.Add);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class Cmp2 extends HookWidget{
+  Widget build(BuildContext context) {
+    var count=useSelector<int, int>((state){
+      return state;
+    });
+    return Container(
+      width: 100,
+      height: 50,
+      decoration: BoxDecoration(
+        color: Colors.blue,
+      ),
+      child: Text('count: $count'),
+    );
+  }
+}
+```
+
+
+### 第十四课
+续全局状态管理 -- flutter原生实现
+
+1.给某个组件加入状态对象
+
+
+2.
+
+
+
+
+--------------------------------
+
+
+
+
+--------------------------------
+
+
+
+
+--------------------------------
+
 
 
 
@@ -479,6 +716,7 @@ page2 ->Page2()
 --------------------------------
 
 
+--------------------------------
 
 
 
