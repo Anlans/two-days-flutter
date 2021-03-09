@@ -336,58 +336,128 @@ class App extends StatelessWidget {
   }
 }
 
+class UserData{
+  String username;
+  String password;
+  int edu;
+  String birth;
+  String intro;
+  @override
+  String toString() {
+    return '''
+username=$username
+password=$password
+edu=$edu
+birth=$birth
+intro=$intro 
+''';
+  }
+}
 
 class Page1 extends HookWidget{
   @override
   Widget build(BuildContext context) {
-    var focusNode=FocusNode();
+    var formKey=GlobalKey();
+    var userData=UserData();
+    var edu=useState(null);
+
     return Scaffold(
       appBar: AppBar(title: Text('页面1')),
-      body: Column(
-        children: [
-          TextField(
-            focusNode: focusNode,
-            decoration: InputDecoration(
-              labelText: '用户名',
-              prefixIcon: Icon(Icons.person),
-            ),
-            textInputAction: TextInputAction.next,
-            onEditingComplete: (){
-              focusNode.nextFocus();
-            },
-          ),
-          TextField(
-            decoration: InputDecoration(
-              labelText: '密码',
-              prefixIcon: Icon(Icons.lock),
-            ),
-            obscureText: true,
-          ),
-          TextField(
-            decoration: InputDecoration(
-              labelText: '手机号',
-              prefixIcon: Icon(Icons.phone),
-            ),
-            keyboardType: TextInputType.phone,
-          ),
-          TextField(
-            decoration: InputDecoration(
-              labelText: '邮箱',
-              prefixIcon: Icon(Icons.email),
-            ),
-            keyboardType: TextInputType.emailAddress,
-          ),
-          Container(
-            child: FlatButton(
-              color: Colors.blue,
-              child: Text('提交', style: TextStyle(color: Colors.white),),
-              onPressed: (){
+      body: SingleChildScrollView(
+        child: Form(
+          key: formKey,
+          child: Column(
+            children: [
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: '用户名',
+                  prefixIcon: Icon(Icons.person),
+                  hintText: '邮箱/手机/用户名',
+                ),
+                // maxLength: 32,
+                onSaved: (val){
+                  userData.username=val;
+                },
+              ),
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: '密码',
+                  prefixIcon: Icon(Icons.lock),
+                ),
+                obscureText: true,
+                onSaved: (val) {
+                  userData.password=val;
+                },
+              ),
+              DropdownButtonFormField(
+                value: edu.value,
+                decoration: InputDecoration(
+                  labelText: '学历',
+                  prefixIcon: Icon(Icons.school),
+                ),
+                items: [
+                  {'id': 1, 'title': '高中'},
+                  {'id': 2, 'title': '大学'},
+                  {'id': 3, 'title': '研究生'},
+                  {'id': 4, 'title': '博士生'},
+                ].map((item)=>DropdownMenuItem(
+                  value: item['id'],
+                  child: Text(item['title']),)).toList(),
+                onChanged: (value) {
+                  edu.value=value;
+                },
+                onSaved: (val){
+                  userData.edu=val;
+                },
+              ),
 
-              },
-            ),
-          )
-        ],
-      )
+              // InputDatePickerFormField(
+              //   firstDate: DateTime(2018, 5, 3, 0, 0, 0),
+              //   lastDate: DateTime(2019, 1, 5, 8, 0, 0),
+              // ),
+
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: '生日',
+                  hintText: '年/月/日',
+                  prefixIcon: Icon(Icons.calendar_today),
+                ),
+                keyboardType: TextInputType.datetime,
+                onSaved: (val) {
+                  userData.birth=val;
+                },
+              ),
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: '自我介绍',
+                  hintText: '请简单描述自己',
+                ),
+                maxLines: 10,
+                onSaved: (val){
+                  userData.intro=val;
+                },
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 20),
+                child: FlatButton(
+                  color: Colors.blue,
+                  child: Text('提交', style: TextStyle(color: Colors.white)),
+                  onPressed: (){
+                    var state=formKey.currentState as FormState;
+                    //校验表单
+                    // state.validate();
+
+                    //保存表单
+                    print(userData);
+                    state.save();
+                    print(userData);
+                  },
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
