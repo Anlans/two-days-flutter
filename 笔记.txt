@@ -784,7 +784,14 @@ DropdownButtonFormField
 
 
 --------------------------------
-
+### 第十八课
+表单校验
+TextFormField(
+  validator: (val){
+    return 'err msg';
+    return null;
+  }
+)
 
 
 

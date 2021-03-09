@@ -365,6 +365,7 @@ class Page1 extends HookWidget{
       appBar: AppBar(title: Text('页面1')),
       body: SingleChildScrollView(
         child: Form(
+          autovalidate: true,
           key: formKey,
           child: Column(
             children: [
@@ -375,8 +376,18 @@ class Page1 extends HookWidget{
                   hintText: '邮箱/手机/用户名',
                 ),
                 // maxLength: 32,
+                onEditingComplete: (){
+                  FocusScope.of(context).nextFocus();
+                },
+                textInputAction: TextInputAction.next,
                 onSaved: (val){
                   userData.username=val;
+                },
+                validator: (val) {
+                  if(val.length<6) return '用户名最少6个字';
+                  else if(val.length>32) return '用户名最多32个子字';
+                  else if(!RegExp(r'^[a-z0-9]+$', caseSensitive: false).hasMatch(val)) return '用户名只能包含英文,数字';
+                  else return null;
                 },
               ),
               TextFormField(
@@ -444,13 +455,14 @@ class Page1 extends HookWidget{
                   child: Text('提交', style: TextStyle(color: Colors.white)),
                   onPressed: (){
                     var state=formKey.currentState as FormState;
+
                     //校验表单
-                    // state.validate();
+                    state.validate();
 
                     //保存表单
-                    print(userData);
-                    state.save();
-                    print(userData);
+                    // print(userData);
+                    // state.save();
+                    // print(userData);
                   },
                 ),
               )
