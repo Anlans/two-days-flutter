@@ -679,18 +679,23 @@ class Cmp2 extends HookWidget{
 ### 第十四课
 续全局状态管理 -- flutter原生实现
 
-1.给某个组件加入状态对象
+1.定义: 给某个组件加入状态对象
+  可以给App,也可以给其他组件--灵活
+  大部分情况: 整个应用共享--App
 
+2.使用:先找自己,父级,父级的父级,....,App级
 
-2.
-
-
-
+--------------------------------
+flutter没有提供全局状态管理功能
+flutter提供了一种功能: 可以帮助你沿着Widget树往上去找特定类型的对象
 
 --------------------------------
 
+depend On Inherited Widget Of Exact Type
 
 
+InheritedWidget -- 被查找功能,没有任何功能,可以被找到
+StatefulWidget  rebuild的提供者
 
 --------------------------------
 
