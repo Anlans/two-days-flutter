@@ -336,54 +336,114 @@ class App extends StatelessWidget {
   }
 }
 
+
 class Page1 extends HookWidget{
   @override
   Widget build(BuildContext context) {
-    var controller=TextEditingController();
     var focusNode=FocusNode();
-
     return Scaffold(
       appBar: AppBar(title: Text('页面1')),
       body: Column(
         children: [
           TextField(
-            controller: controller,
             focusNode: focusNode,
-          ),
-          FlatButton(
-            color: Colors.blue,
-            child: Text('获取'),
-            onPressed: (){
-              print(controller.text);
+            decoration: InputDecoration(
+              labelText: '用户名',
+              prefixIcon: Icon(Icons.person),
+            ),
+            textInputAction: TextInputAction.next,
+            onEditingComplete: (){
+              focusNode.nextFocus();
             },
           ),
-          FlatButton(
-            color: Colors.blue,
-            child: Text('设置'),
-            onPressed: (){
-              controller.text='bbbb';
-            },
+          TextField(
+            decoration: InputDecoration(
+              labelText: '密码',
+              prefixIcon: Icon(Icons.lock),
+            ),
+            obscureText: true,
           ),
-          FlatButton(
-            color: Colors.blue,
-            child: Text('设置焦点'),
-            onPressed: (){
-              focusNode.requestFocus();
-            },
+          TextField(
+            decoration: InputDecoration(
+              labelText: '手机号',
+              prefixIcon: Icon(Icons.phone),
+            ),
+            keyboardType: TextInputType.phone,
           ),
-          FlatButton(
-            color: Colors.blue,
-            child: Text('去掉焦点'),
-            onPressed: (){
-              focusNode.unfocus();
-            },
+          TextField(
+            decoration: InputDecoration(
+              labelText: '邮箱',
+              prefixIcon: Icon(Icons.email),
+            ),
+            keyboardType: TextInputType.emailAddress,
           ),
+          Container(
+            child: FlatButton(
+              color: Colors.blue,
+              child: Text('提交', style: TextStyle(color: Colors.white),),
+              onPressed: (){
+
+              },
+            ),
+          )
         ],
-      ),
+      )
     );
   }
 }
 
+
+
+
+//
+// class Page1 extends HookWidget{
+//   @override
+//   Widget build(BuildContext context) {
+//     var controller=TextEditingController();
+//     var focusNode=FocusNode();
+//
+//     return Scaffold(
+//       appBar: AppBar(title: Text('页面1')),
+//       body: Column(
+//         children: [
+//           TextField(
+//             controller: controller,
+//             focusNode: focusNode,
+//           ),
+//           FlatButton(
+//             color: Colors.blue,
+//             child: Text('获取'),
+//             onPressed: (){
+//               print(controller.text);
+//             },
+//           ),
+//           FlatButton(
+//             color: Colors.blue,
+//             child: Text('设置'),
+//             onPressed: (){
+//               controller.text='bbbb';
+//             },
+//           ),
+//           FlatButton(
+//             color: Colors.blue,
+//             child: Text('设置焦点'),
+//             onPressed: (){
+//               focusNode.requestFocus();
+//             },
+//           ),
+//           FlatButton(
+//             color: Colors.blue,
+//             child: Text('去掉焦点'),
+//             onPressed: (){
+//               focusNode.unfocus();
+//             },
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+//
 
 
 //
