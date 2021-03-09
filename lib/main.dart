@@ -336,59 +336,47 @@ class App extends StatelessWidget {
   }
 }
 
-class MyList extends HookWidget{
-  final listItems;
-  final onCheckedChanged;
-  MyList({Key key, this.listItems, this.onCheckedChanged}):super(key:key);
-
+class Page1 extends HookWidget{
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: listItems.map<ListItem>((item){
-        var checked=useState(item['checked']);
-
-        return ListItem(
-          icon: item['icon'],
-          title: item['title'],
-          checked: checked.value,
-          onChanged: (val){
-            checked.value=val;
-            onCheckedChanged(item, val);
-          },
-        );
-      }).toList(),
-    );
-  }
-
-}
-
-class Page1 extends StatelessWidget{
-  Widget build(BuildContext context) {
-    var listItems=[
-      {'icon': Icons.access_time, 'title': '飞行模式', 'checked': false},
-      {'icon': Icons.favorite, 'title': 'Wi-Fi', 'checked': true},
-      {'icon': Icons.settings, 'title': '蓝牙', 'checked': true},
-      {'icon': Icons.zoom_in, 'title': '移动网络', 'checked': false},
-    ];
+    var controller=TextEditingController();
+    var focusNode=FocusNode();
 
     return Scaffold(
       appBar: AppBar(title: Text('页面1')),
       body: Column(
         children: [
-          MyList(
-            listItems: listItems ,
-            onCheckedChanged: (item, val){
-              item['checked']=val;
+          TextField(
+            controller: controller,
+            focusNode: focusNode,
+          ),
+          FlatButton(
+            color: Colors.blue,
+            child: Text('获取'),
+            onPressed: (){
+              print(controller.text);
             },
           ),
-          Center(
-            child: FlatButton(
-              color: Colors.blue,
-              child: Text('发给服务器'),
-              onPressed: (){
-                print(listItems);
-              },
-            ),
+          FlatButton(
+            color: Colors.blue,
+            child: Text('设置'),
+            onPressed: (){
+              controller.text='bbbb';
+            },
+          ),
+          FlatButton(
+            color: Colors.blue,
+            child: Text('设置焦点'),
+            onPressed: (){
+              focusNode.requestFocus();
+            },
+          ),
+          FlatButton(
+            color: Colors.blue,
+            child: Text('去掉焦点'),
+            onPressed: (){
+              focusNode.unfocus();
+            },
           ),
         ],
       ),
@@ -396,34 +384,98 @@ class Page1 extends StatelessWidget{
   }
 }
 
-class ListItem extends StatelessWidget{
-  final icon;
-  final String title;
-  final checked;
-  final onChanged;
 
 
-  ListItem({Key key, this.icon, this.title, this.checked, this.onChanged}):super(key: key);
+//
+// class MyList extends HookWidget{
+//   final listItems;
+//   final onCheckedChanged;
+//   MyList({Key key, this.listItems, this.onCheckedChanged}):super(key:key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       children: listItems.map<ListItem>((item){
+//         var checked=useState(item['checked']);
+//
+//         return ListItem(
+//           icon: item['icon'],
+//           title: item['title'],
+//           checked: checked.value,
+//           onChanged: (val){
+//             checked.value=val;
+//             onCheckedChanged(item, val);
+//           },
+//         );
+//       }).toList(),
+//     );
+//   }
+//
+// }
+//
+// class Page1 extends StatelessWidget{
+//   Widget build(BuildContext context) {
+//     var listItems=[
+//       {'icon': Icons.access_time, 'title': '飞行模式', 'checked': false},
+//       {'icon': Icons.favorite, 'title': 'Wi-Fi', 'checked': true},
+//       {'icon': Icons.settings, 'title': '蓝牙', 'checked': true},
+//       {'icon': Icons.zoom_in, 'title': '移动网络', 'checked': false},
+//     ];
+//
+//     return Scaffold(
+//       appBar: AppBar(title: Text('页面1')),
+//       body: Column(
+//         children: [
+//           MyList(
+//             listItems: listItems ,
+//             onCheckedChanged: (item, val){
+//               item['checked']=val;
+//             },
+//           ),
+//           Center(
+//             child: FlatButton(
+//               color: Colors.blue,
+//               child: Text('发给服务器'),
+//               onPressed: (){
+//                 print(listItems);
+//               },
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+//
+// class ListItem extends StatelessWidget{
+//   final icon;
+//   final String title;
+//   final checked;
+//   final onChanged;
+//
+//
+//   ListItem({Key key, this.icon, this.title, this.checked, this.onChanged}):super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       padding: EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
+//       child: Row(
+//         children: [
+//           Container(
+//             margin: EdgeInsets.only(right: 20),
+//             child: Icon(icon, size: 20),
+//           ),
+//           Expanded(
+//               child: Text(title, style: TextStyle(fontSize: 20),),
+//           ),
+//           Switch(
+//             value: checked,
+//             onChanged: onChanged,
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
-      child: Row(
-        children: [
-          Container(
-            margin: EdgeInsets.only(right: 20),
-            child: Icon(icon, size: 20),
-          ),
-          Expanded(
-              child: Text(title, style: TextStyle(fontSize: 20),),
-          ),
-          Switch(
-            value: checked,
-            onChanged: onChanged,
-          ),
-        ],
-      ),
-    );
-  }
-}

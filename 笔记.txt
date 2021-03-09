@@ -722,8 +722,34 @@ Switch(
 
 
 --------------------------------
+### 第十六课
+输入框,文本框
+
+var controller=TextEditingController();
+TextField(
+  controller: controller,
+)
+
+//获取
+controller.text
+
+//设置
+controller.text='xxxx';
 
 
+--------------------------------
+
+var controller=TextEditingController();
+var focusNode=FocusNOde();
+
+TextField(
+  controller: controller,
+  focusNode: focusNode,
+);
+
+controller.text
+focusNode.requestFocus();  //设置焦点
+focusNode.unfocus();        //去掉焦点
 
 
 --------------------------------
