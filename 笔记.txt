@@ -698,6 +698,25 @@ InheritedWidget -- 被查找功能,没有任何功能,可以被找到
 StatefulWidget  rebuild的提供者
 
 --------------------------------
+###　第十五课　
+表单
+
+Checkbox(
+  value: state.value,
+  tristate: bool,
+  onChanged(val){
+    state.value=val;
+  },
+)
+
+
+--------------------------------
+Switch(
+  value: state.value,
+  onChanged: (val){
+    state.value=val;
+  },
+)
 
 
 
