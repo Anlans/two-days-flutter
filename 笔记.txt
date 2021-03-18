@@ -796,13 +796,44 @@ TextFormField(
 
 
 --------------------------------
+### 第十九课
+Hero组件(可重用)
+
+
+const style=TextStyle(
+  inherit: false,//父级啥样就啥样
+);
 
 
 --------------------------------
+### 第二十课
+audioplayers
+1.播放网络音乐
+  var player=AudioPlayer();
+  player.play('http://....mp3');
+
+
+
+2.播放本地音乐文件
+  var player=AudioPlayer();
+  player.play(/xxx/'1.mp3', isLocal: true);
+
+3.播放assets音乐
+  var player=AudioCache();
+  player.play('assets/1.mp3');
 
 
 
 --------------------------------
+暂时禁用‘仅能通过https通信’特性
+
+android/app/src/AndroidManifest.xml
+添加连接网络权限
+<uses-permission android:name="android.permission.INTERNET" />
+
+<application
+    ...
+    android:usesCleartextTraffic="true"
 
 
 --------------------------------
