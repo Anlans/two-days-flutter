@@ -837,8 +837,17 @@ android/app/src/AndroidManifest.xml
 
 
 --------------------------------
+AlertDialog的使用
 
-
+showDialog(
+  context: context,
+  builder: (context) => AlertDialog(
+    title: Center(
+      child: Text('播放失败'),
+    ),
+    content: Text('请检查网络连接，并重试'),
+  ),
+);
 
 --------------------------------
 

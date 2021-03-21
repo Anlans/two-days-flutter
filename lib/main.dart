@@ -20,7 +20,7 @@ class App extends StatelessWidget {
 
 // ignore: must_be_immutable
 class Page1 extends HookWidget{
-  var player;//保证stop有效,拒绝被覆盖
+  AudioPlayer player;//保证stop有效,拒绝被覆盖
   Page1({Key key}):super(key: key){
     player=AudioPlayer();
   }
@@ -34,6 +34,20 @@ class Page1 extends HookWidget{
       var m=(sec~/60).toString().padLeft(2, '0');
       var s=(sec%60).toString().padLeft(2, '0');
       time.value='$m:$s';
+    });
+
+
+    player.onPlayerStateChanged.listen((event) {
+      print('event: $event');
+    });
+
+    player.onPlayerError.listen((event) {
+      print('player error: $event');
+
+
+      AlertDialog(
+        title: Text('播放失败'),
+        content: Text('请检查网络连接，并重试'),);
     });
 
     return Scaffold(
@@ -52,9 +66,6 @@ class Page1 extends HookWidget{
                 var res=await player.play(musicUrl);
                 // print('play: $res');//1代表成功
                 if(res!=1) {
-                  AlertDialog(
-                    title: Text('播放失败'),
-                    content: Text('请检查网络连接，并重试'),);
                 }
 
               },
@@ -75,6 +86,40 @@ class Page1 extends HookWidget{
                 }
               },
             ),
+
+            FlatButton(
+              color: Colors.red,
+              child: Text('报错'),
+              onPressed: (){
+
+
+
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: Center(
+                      child: Text('播放失败'),
+                    ),
+                    content: Text('请检查网络连接，并重试'),
+                    actions: [
+                      FlatButton(
+                        child: Text('确定'),
+                        color: Colors.blue,
+                        onPressed: (){
+                          Navigator.pop(context);
+                        },
+                      ),
+                      FlatButton(
+                        child: Text('不确定'),
+                        onPressed: (){},
+                      ),
+                    ],
+                  ),
+                );
+              },
+
+
+            )
           ],
         ),
       ),
