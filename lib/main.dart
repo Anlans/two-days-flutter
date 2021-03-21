@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter2/util/dialog_util.dart';
 
 void main() {
   runApp(App());
@@ -44,10 +45,16 @@ class Page1 extends HookWidget{
     player.onPlayerError.listen((event) {
       print('player error: $event');
 
+      alert(
+        context,
+        title: '播放失败',
+        msg: '无法加载稍后重试',
+      );
 
       AlertDialog(
         title: Text('播放失败'),
         content: Text('请检查网络连接，并重试'),);
+        time.value='错误';
     });
 
     return Scaffold(
@@ -66,7 +73,13 @@ class Page1 extends HookWidget{
                 var res=await player.play(musicUrl);
                 // print('play: $res');//1代表成功
                 if(res!=1) {
+                  alert(
+                    context,
+                    title: '播放失败',
+                    msg: '音乐无法停止播放',
+                  );
                 }
+                time.value='读取中...';
 
               },
 
@@ -80,10 +93,13 @@ class Page1 extends HookWidget{
                 // print('stop: $res');
                 time.value='00:00';
                 if(res!=1){
-                  AlertDialog(
-                    title: Text('停止失败'),
-                    content: Text('请手动关闭程序'),);
+                  alert(
+                    context,
+                    title: '停止失败',
+                    msg: '请手动关闭程序',
+                  );
                 }
+
               },
             ),
 
@@ -91,34 +107,12 @@ class Page1 extends HookWidget{
               color: Colors.red,
               child: Text('报错'),
               onPressed: (){
-
-
-
-                showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: Center(
-                      child: Text('播放失败'),
-                    ),
-                    content: Text('请检查网络连接，并重试'),
-                    actions: [
-                      FlatButton(
-                        child: Text('确定'),
-                        color: Colors.blue,
-                        onPressed: (){
-                          Navigator.pop(context);
-                        },
-                      ),
-                      FlatButton(
-                        child: Text('不确定'),
-                        onPressed: (){},
-                      ),
-                    ],
-                  ),
+                alert(
+                    context,
+                    title: '播放失败了',
+                    msg: '怎么第吧',
                 );
               },
-
-
             )
           ],
         ),
