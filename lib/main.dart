@@ -1,11 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter2/util/dialog_util.dart';
 
 void main() {
   runApp(App());
 }
+
 
 class App extends StatelessWidget {
   // This widget is the root of your application.
@@ -19,105 +19,106 @@ class App extends StatelessWidget {
   }
 }
 
-// ignore: must_be_immutable
-class Page1 extends HookWidget{
-  AudioPlayer player;//保证stop有效,拒绝被覆盖
-  Page1({Key key}):super(key: key){
-    player=AudioPlayer();
-  }
-
+class Page1 extends StatelessWidget{
   Widget build(BuildContext context) {
-    final String musicUrl='http://aq.webturing.com/wp-content/uploads/2021/03/tstMusic.mp3';
-    final time=useState('00:00');
-
-    player.onAudioPositionChanged.listen((duration) {//监听
-      var sec=duration.inSeconds;
-      var m=(sec~/60).toString().padLeft(2, '0');
-      var s=(sec%60).toString().padLeft(2, '0');
-      time.value='$m:$s';
-    });
-
-
-    player.onPlayerStateChanged.listen((event) {
-      print('event: $event');
-    });
-
-    player.onPlayerError.listen((event) {
-      print('player error: $event');
-
-      alert(
-        context,
-        title: '播放失败',
-        msg: '无法加载稍后重试',
-      );
-
-      AlertDialog(
-        title: Text('播放失败'),
-        content: Text('请检查网络连接，并重试'),);
-        time.value='错误';
-    });
-
     return Scaffold(
       appBar: AppBar(title: Text('页面1')),
-      body: Center(
-        child: Column(
-          children: [
-            Text(time.value, style:TextStyle(
-              fontSize: 40,
-            )),
-
-            FlatButton(
-              color: Colors.blue,
-              child: Text('播放'),
-              onPressed: () async{
-                var res=await player.play(musicUrl);
-                // print('play: $res');//1代表成功
-                if(res!=1) {
-                  alert(
-                    context,
-                    title: '播放失败',
-                    msg: '音乐无法停止播放',
-                  );
-                }
-                time.value='读取中...';
-
-              },
-
-            ),
-
-            FlatButton(
-              color: Colors.blue,
-              child: Text('停止'),
-              onPressed: () async{
-                var res=await player.stop();
-                // print('stop: $res');
-                time.value='00:00';
-                if(res!=1){
-                  alert(
-                    context,
-                    title: '停止失败',
-                    msg: '请手动关闭程序',
-                  );
-                }
-
-              },
-            ),
-
-            FlatButton(
-              color: Colors.red,
-              child: Text('报错'),
-              onPressed: (){
-                alert(
-                    context,
-                    title: '播放失败了',
-                    msg: '怎么第吧',
-                );
-              },
-            )
-          ],
-        ),
+      body: Container(
+        // color: Colors.red,
+        margin: EdgeInsets.all(20),
+        width: 30,
+        height: 30,
+        child: ArcProgress(),
       ),
     );
+  }
+}
+
+class ArcProgress extends StatelessWidget{
+  final double percent;
+  final double width;
+  final Color color;
+  final Color bgColor;
+
+  ArcProgress({
+    this.percent=0.35,
+    this.width=3.0,
+    this.color=Colors.red,
+    this.bgColor=Colors.grey,
+  }):super();
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomPaint(//这才算是一个组件，才可以使用
+      painter: _ArcPainter(
+        percent: percent,
+        width: width,
+        bgColor: bgColor,
+        color: color,
+      ),
+    );
+
+  }
+
+}
+
+
+class _ArcPainter extends CustomPainter{//属于绘图的命令
+  final double percent;
+  final double width;
+  final Color color;
+  final Color bgColor;
+
+  _ArcPainter({
+    this.percent=0.0,
+    this.width=1.0,
+    this.color=Colors.black,
+    this.bgColor=Colors.grey,
+  }):super();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    //首先确定绘图区域 Rect
+    final rect=Rect.fromLTWH(width/2, width/2, size.width-width, size.height-width);
+
+    //背景
+    if(bgColor!=null){
+
+      final path=Path();//声明一下path对象
+      path.arcTo(rect, -90*pi/180, 359.999*pi/180, true);
+
+      //paint
+      final paint=Paint();
+      paint.style=PaintingStyle.stroke;
+      paint.strokeWidth=width;
+      paint.color=bgColor;
+
+      canvas.drawPath(path, paint);
+
+    }
+
+
+    //前景
+    //path
+    final path=Path();//声明一下path对象
+    path.arcTo(rect, -90*pi/180, percent*359.9999*pi/180, true);
+
+    //paint
+    final paint=Paint();
+    paint.style=PaintingStyle.stroke;
+    paint.strokeWidth=width;
+    paint.color=color;
+    paint.strokeCap=StrokeCap.round;//两端圆头
+    paint.strokeCap=StrokeCap.butt;
+
+
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(_ArcPainter oldDelegate) {
+    return oldDelegate.percent!=percent;
   }
 
 }
